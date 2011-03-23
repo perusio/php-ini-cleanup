@@ -1,0 +1,56 @@
+#!/bin/bash
+
+### This is a simple script that wraps the AWK script and handles all
+### the file munging.
+
+SCRIPTNAME=${0##*/}
+
+## Prints a usage help message.
+function print_usage() {
+    echo "usage: $SCRIPTNAME -p|-d [php.ini]"
+    exit 1
+}
+
+
+## Check the number of arguments.
+if [ $# -lt 1 ] || [ $# -gt 2 ]; then
+    print_usage
+fi
+
+
+## Getting the input filename. By default assumes that is called
+## php.ini and is on the current directory.
+if [ ! -r php.ini ]; then
+    echo "php.ini file is missing. Specify it as the last argument."
+    echo "E.g.: $SCRIPTNAME /etc/php5/cli/php.ini"
+    exit 1
+else
+    [ $# -eq 2 ] && INPUT_FILE=$2
+    [ $# -eq 1 ] && INPUT_FILE=php.ini 
+fi
+
+## The AWK script that does the cleanup.
+AWK_SCRIPT=$(dirname $0)/php_cleanup.awk
+[ -r $AWK_SCRIPT ] || exit 0
+
+## Create the temporary file for output.
+TEMP_FILE=$(mktemp)
+
+## Run the clean up of the php.ini file for a production environment.
+while getopts pd OPT; do
+    case $OPT in
+        p|+p)  # In a production environment.
+           $AWK_SCRIPT -v is_prod=1 $INPUT_FILE | uniq > $TEMP_FILE
+            ;;
+        d|+d)  # In a development environment.
+           $AWK_SCRIPT $INPUT_FILE | uniq > $TEMP_FILE
+            ;;
+        *) # Otherwise print a usage message.
+            print_usage
+    esac
+done
+shift $(( OPTIND - 1 ))
+OPTIND=1
+
+## Move the temporary file to the original one.
+mv $TEMP_FILE $INPUT_FILE
