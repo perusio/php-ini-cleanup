@@ -38,7 +38,7 @@ disclosure** vulnerability. It reveals a lot of, potentially:
      which version you're running.
      
  
-  3. **zlib compression** and ***compression level**: if available use
+  3. **zlib compression** and **compression level**: if available use
      `zlib` with compression level `1`.
      
   4. **memory limit**: a generous **512 MB**.
@@ -66,7 +66,7 @@ disclosure** vulnerability. It reveals a lot of, potentially:
      [cookies](http://www.owasp.org/index.php/HTTPOnly "OWASP on
      HttpOnly") through the DOM, i.e., JavaScript manipulation of
      cookies. All modern browsers support the `HttpOnly` flag. IE6, 7
-     and 8 also support.
+     and 8 also support it.
      
      
 ## Installation and Usage
