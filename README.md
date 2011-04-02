@@ -25,7 +25,7 @@ disclosure** vulnerability. It reveals a lot of, potentially:
  which can compromise not only the specific site but also other sites
  which may be hosted on the same machine.
  
- ## Which PHP settings are altered and why?
+## Which PHP settings are altered and why?
 
  The following settings are altered:
  
@@ -69,7 +69,7 @@ disclosure** vulnerability. It reveals a lot of, potentially:
      and 8 also support.
      
      
- ## Installation and Usage
+## Installation and Usage
  
 To use this script(s) do the following:
  
