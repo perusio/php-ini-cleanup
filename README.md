@@ -92,19 +92,19 @@ To use this script(s) do the following:
   1. Cleanup a production site, running the script on the directory of
      `php.ini`:
       
-        php_cleanup -p 
+        `php_cleanup -p`
       
   2. Cleanup a development site, running the script on the directory
      of `php.ini`:
   
-        php_cleanup -d
+        `php_cleanup -d`
      
      
   3. Cleanup a production site with [PHP FPM](http://php-fpm.org),
      running the script from an arbitrary directory (assuming the PHP
      filesystem layout of debian):
      
-        php_cleanup -p /etc/php5/fpm/php.ini
+        `php_cleanup -p /etc/php5/fpm/php.ini`
     
 ## TODO
 
