@@ -82,7 +82,7 @@ To use this script(s) do the following:
         **production** or a **development** environment.
      
      b) The **second** argument specifies the filename of the PHP
-        runtime control file. php.ini` (or similar) file to cleanup.
+        runtime control file. `php.ini` (or similar) file to cleanup.
         By default it assumes that the PHP runtime configuration 
         to is specified mostly through ``
         current.
