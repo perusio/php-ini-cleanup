@@ -84,8 +84,7 @@ To use this script(s) do the following:
      b) The **second** argument specifies the filename of the PHP
         runtime control file. `php.ini` (or similar) file to cleanup.
         By default it assumes that the PHP runtime configuration 
-        to is specified mostly through ``
-        current.
+        to is specified mostly through `php.ini`.
         
         
 ### Usage Examples
