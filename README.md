@@ -75,8 +75,8 @@ To use this script(s) do the following:
  
   1. Just clone the git repo or download a snaphost.
     
-  2. Run the shell script `php_cleanup`. It accepts two **optional**
-     arguments:
+  2. Run the shell script `php_cleanup`. It accepts one **mandatory**
+     and one **optional** argument:
      
      a) The **first** argument specifies if we are cleaning up a
         **production** or a **development** environment.
