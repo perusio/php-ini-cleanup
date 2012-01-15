@@ -1,4 +1,4 @@
-#!/usr/bin/awk -f 
+#!/usr/bin/awk -f
 # php_cleanup.awk --- This file contains a script that tunes a given
 # PHP configuration for security.
 
@@ -29,38 +29,45 @@
 # DEALINGS IN THE SOFTWARE.
 
 ## Skip the first error log setting to avoid duplicates.
-/error_log.*\.log$/ {next}
+/^error_log.*\.log$/ {next}
 
 ## Ditto for display_errors.
-/;display_errors.*err/ {print; next}
+/^;display_errors.*err/ {print; next}
 
 ## Don't reveal you're running PHP too easily.
 /^;*expose_php/ {print "expose_php = Off"; next}
 
 ## Display errors only on development environments.
-/^[; ]*display_errors/ {if (is_prod) print "display_errors = Off"; else print "display_errors = On"; next} 
+/^[; ]*display_errors/ {if (is_prod) print "display_errors = Off"; else print "display_errors = On"; next}
 
 ## On a production environment use syslog for logging.
-/^;error_log[ ]*=.*log/ {if (is_prod) print "error_log = syslog"} 
+/^;error_log[ ]*=.*log/ {if (is_prod) print "error_log = syslog"}
 
 ## Use zlib compression for the PHP scripts.
 /^;*zlib.output_compression_level/ {print "zlib.output_compression_level = 1"; next}
 /^;*zlib.output_compression/  {print "zlib.output_compression = On"; next}
 
 ## Resources for POST and memory.
-/memory_limit/ {print "memory_limit = 512M"; next}
-/post_max_size/ {print "post_max_size = 1024M"; next}
-/upload_max_filesize/ {print "upload_max_filesize = 512M"; next}
+/^memory_limit/ {print "memory_limit = 512M"; next}
+/^post_max_size/ {print "post_max_size = 1024M"; next}
+/^upload_max_filesize/ {print "upload_max_filesize = 512M"; next}
 
 ## CGI fix PATHINFO.
-/;[ ]+cgi.fix_pathinfo[ ]*=/ {print "cgi.fix_pathinfo = 0"; next}
+/^;[ ]+cgi.fix_pathinfo[ ]*=/ {print "cgi.fix_pathinfo = 0"; next}
 
 ## Fopen wrappers.
-/allow_url_fopen/ {print "allow_url_fopen = Off"; next}
-/allow_url_include/ {print "allow_url_include = Off"; next}
+/^allow_url_fopen/ {print "allow_url_fopen = Off"; next}
+/^allow_url_include/ {print "allow_url_include = Off"; next}
 
 ## No cookie handling with JS on the client.
 /session.cookie_httponly/ {print "session.cookie_httponly = 1"; next}
 
-{print}
+## Add entropy to the session token generation mechanism using the
+## hardware random number generator. Only available on PHP 5.3 and later.
+/^session.entropy_length[ ]+=[ ]+0/ {
+    printf("; This requires PHP 5.3 or later.\nsession.entropy_length = 32\n")
+    next
+}
+/^;session.entropy_file[ ]+=.*/ {print "session.entropy_file = /dev/urandom"; next}
 
+{print}

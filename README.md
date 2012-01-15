@@ -68,6 +68,9 @@ disclosure** vulnerability. It reveals a lot of, potentially:
      cookies. All modern browsers support the `HttpOnly` flag. IE6, 7
      and 8 also support it.
      
+  9. Setup additional entropy for session token generation using the
+     hardware random number generator `/dev/urandom`. This requires
+     PHP 5.3 or later.
      
 ## Installation and Usage
  
@@ -109,9 +112,4 @@ To use this script(s) do the following:
 ## TODO
 
    Hook this into [drush](https://github.com/perusio/drush-extras "My drush
-   extras"). 
- 
- 
- 
- 
- 
+   extras").
