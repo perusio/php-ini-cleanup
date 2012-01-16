@@ -36,8 +36,7 @@ disclosure** vulnerability. It reveals a lot of, potentially:
      
   2. **PHP exposition**: don't expose that you're running PHP and
      which version you're running.
-     
- 
+      
   3. **zlib compression** and **compression level**: if available use
      `zlib` with compression level `1`.
      
@@ -108,8 +107,3 @@ To use this script(s) do the following:
      filesystem layout of debian):
      
         `php_cleanup -p /etc/php5/fpm/php.ini`
-    
-## TODO
-
-   Hook this into [drush](https://github.com/perusio/drush-extras "My drush
-   extras").
