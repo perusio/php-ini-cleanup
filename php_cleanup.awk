@@ -28,6 +28,14 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
 
+BEGIN {
+    ## Get the multiple and memory value.
+    if (memory) {
+        mem_multiple = substr(memory, length(memory), 1)
+        mem_value = substr(memory, 1, length(memory) - 1)
+    }
+}
+
 ## Skip the first error log setting to avoid duplicates.
 /^error_log.*\.log$/ {next}
 
@@ -48,9 +56,9 @@
 /^;*zlib.output_compression/  {print "zlib.output_compression = On"; next}
 
 ## Resources for POST and memory.
-/^memory_limit/ {print "memory_limit = 512M"; next}
-/^post_max_size/ {print "post_max_size = 1024M"; next}
-/^upload_max_filesize/ {print "upload_max_filesize = 512M"; next}
+/^memory_limit/ {if (memory) print "memory_limit =", memory; else print "memory_limit = 512M"; next}
+/^post_max_size/ {if (memory) printf("post_max_size = %d%s\n", 2 * mem_value, mem_multiple); else print "post_max_size = 1024M"; next}
+/^upload_max_filesize/ {if (memory) print "upload_max_filesize =", memory; else print "upload_max_filesize = 512M"; next}
 
 ## CGI fix PATHINFO.
 /^;[ ]+cgi.fix_pathinfo[ ]*=/ {print "cgi.fix_pathinfo = 0"; next}

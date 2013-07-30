@@ -78,15 +78,18 @@ To use this script(s) do the following:
   1. Just clone the git repo or download a snaphost.
     
   2. Run the shell script `php_cleanup`. It accepts one **mandatory**
-     and one **optional** argument:
+     and two **optional** arguments:
      
      a) The **first** argument specifies if we are cleaning up a
         **production** or a **development** environment.
      
-     b) The **second** argument specifies the filename of the PHP
+     b) The **second** argument specifies the memory limit for PHP. By
+        default is 512M.
+     
+     c) The **last** argument specifies the filename of the PHP
         runtime control file. `php.ini` (or similar) file to cleanup.
         By default it assumes that the PHP runtime configuration 
-        to is specified mostly through `php.ini`.
+        is `php.ini` and is in the current directory.
         
         
 ### Usage Examples
@@ -94,16 +97,22 @@ To use this script(s) do the following:
   1. Cleanup a production site, running the script on the directory of
      `php.ini`:
       
-        `php_cleanup -p`
+         php_cleanup -p
       
   2. Cleanup a development site, running the script on the directory
      of `php.ini`:
   
-        `php_cleanup -d`
+         php_cleanup -d
      
      
   3. Cleanup a production site with [PHP FPM](http://php-fpm.org),
      running the script from an arbitrary directory (assuming the PHP
      filesystem layout of debian):
      
-        `php_cleanup -p /etc/php5/fpm/php.ini`
+         php_cleanup -p /etc/php5/fpm/php.ini
+
+  4. Cleanup a production site with [PHP FPM](http://php-fpm.org),
+     running the script from an arbitrary directory (assuming the PHP
+     filesystem layout of debian) and set the memory limit to 2G:
+     
+         php_cleanup -p -m 2G /etc/php5/fpm/php.ini
